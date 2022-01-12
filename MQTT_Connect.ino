@@ -24,7 +24,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
   Serial.println("] ");
   // Konverterer den indkomne besked (payload) fra en array til en string:
   // Topic == Temperaturmaaler, Topic == Kraftsensor
-  if (topic == "frederikju@gmail.com/34338") { // OBS: der subscribes til et topic nede i reconnect-funktionen. I det her tilfælde er der subscribed til "Test". Man kan subscribe til alle topics ved at bruge "#"
+  if (topic == "email") { // OBS: der subscribes til et topic nede i reconnect-funktionen. I det her tilfælde er der subscribed til "Test". Man kan subscribe til alle topics ved at bruge "#"
     payload = ""; // Nulstil payload variablen så forloopet ikke appender til en allerede eksisterende payload
     for (int i = 0; i < length; i++) {
       payload += (char)byteArrayPayload[i];
@@ -33,7 +33,7 @@ void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length)
     if(payload == "window_open"){digitalWrite(IOpin1, HIGH);}
     else if(payload == "window_close"){digitalWrite(IOpin1, LOW);}
     
-    //client.publish("frederikju@gmail.com/34338", "Hello World"); // Publish besked fra MCU til et valgt topic. Husk at subscribe til topic'et i NodeRed.
+    //client.publish("email", "Hello World"); // Publish besked fra MCU til et valgt topic. Husk at subscribe til topic'et i NodeRed.
   }
 
 }
@@ -78,7 +78,7 @@ void reconnect() {
     if (client.connect("GroupNamexMCU", mqtt_user, mqtt_pass)) { // Forbinder til klient med mqtt bruger og password
       Serial.println("connected");
       // Derudover subsribes til topic "Test" hvor NodeMCU modtager payload beskeder fra
-      client.subscribe("frederikju@gmail.com/34338");
+      client.subscribe("email");
       // Der kan subscribes til flere specifikke topics
       //client.subscribe("Test1");
       // Eller til samtlige topics ved at bruge '#' (Se Power Point fra d. 18. marts)
