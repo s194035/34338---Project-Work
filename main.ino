@@ -4,44 +4,34 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
-// Definerer id og password til netværksforbindelse som NodeMCU anvender
-const char* ssid = "iPhone"; //Indsæt navnet på jeres netværk her
-const char* password = "pass"; //Indsæt password her
-
-// Definerer information til mqtt serveren
-const char *mqtt_server = "maqiatto.com"; //navn på mqtt-server. Find navnet på cloudmqtt-hjemmesiden
-const int mqtt_port = 1883; // Definerer porten
-const char *mqtt_user = "email"; // Definerer mqtt-brugeren
-const char *mqtt_pass = "pass"; // Definerer koden til mqtt-brugeren
+const char* ssid = "iPhone"; //Name of network
+const char* password = "pass"; //Password for network
+const char *mqtt_server = "maqiatto.com"; // We use maqiatto
+const int mqtt_port = 1883; 
+const char *mqtt_user = "email"; // Maqiatto-user name
+const char *mqtt_pass = "pass"; // Maqiatto-user password
 //
 int IOpin1 = 4;
-String payload; // Definerer variablen 'payload' i det globale scope (payload er navnet på besked-variablen)
+String payload; //Define payload in global scope
 
 void callback(char* byteArraytopic, byte* byteArrayPayload, unsigned int length);
 
-// Opretter en klient der kan forbinde til en specifik internet IP adresse.
-WiFiClient espClient; // Initialiserer wifi bibloteket ESP8266Wifi, som er inkluderet under "nødvendige bibloteker"
+WiFiClient espClient; //WiFi client initialisation
 
-// Opretter forbindelse til mqtt klienten:
-PubSubClient client(mqtt_server, mqtt_port, callback, espClient);
+PubSubClient client(mqtt_server, mqtt_port, callback, espClient); //Connect to mqrtt
 
 
 
 void setup() {
-
-  Serial.begin(115200); // Åbner serial porten og sætter data raten til 115200 baud
+  Serial.begin(115200);
   delay(1000);
-  setup_wifi(); // Kører WiFi loopet og forbinder herved.
-  client.setServer(mqtt_server, mqtt_port); // Forbinder til mqtt serveren (defineret længere oppe)
-  client.setCallback(callback); // Ingangsætter den definerede callback funktion hver gang der er en ny besked på den subscribede "cmd"- topic
-
-
+  setup_wifi(); 
+  client.setServer(mqtt_server, mqtt_port); //Connect to mqtt server
+  client.setCallback(callback); //Initialises the callback function
 }
 
 
 void loop() {
-
-  // Hvis der opstår problemer med forbindelsen til mqtt broker oprettes forbindelse igen ved at køre client loop
   if (!client.connected()) {
     reconnect();
   }
@@ -49,5 +39,3 @@ void loop() {
 
   delay(1000);
 }
-
-//////// Loop slut ////////
