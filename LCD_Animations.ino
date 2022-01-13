@@ -1,3 +1,6 @@
+//////////////IMPORTANT!/////////////
+//Only compile this code on the arduino uno. If compiled on the ESP8266 it will not work properly.
+
 /*
   LiquidCrystal Library - Hello World
 
