@@ -225,6 +225,17 @@ byte wind8[] = {
   B00000
 };
 
+byte sun[] = {
+  B00000,
+  B00100,
+  B10101,
+  B01110,
+  B11111,
+  B01110,
+  B10101,
+  B00100
+};
+
 
 
 
@@ -313,4 +324,11 @@ void windAnim() {
   lcd.setCursor(3,0);
   lcd.setCursor(3,3);
   delay (500);
+}
+
+void sunAnim(){
+    lcd.createChar(17, sun);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.write(17);
 }
